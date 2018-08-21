@@ -27,8 +27,12 @@ export class YoutubeService {
 
     return this.http.get(url, { params: params })
                     .pipe(map( data => {
+                      const videos: any[] = [];
                       this.nextpageToken = data['nextPageToken'];
-                      return data['items'];
+                      for (const video of data['items']) {
+                        videos.push(video.snippet);
+                      }
+                      return videos;
                     }));
   }
 }

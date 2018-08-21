@@ -8,9 +8,12 @@ import { YoutubeService } from '../../services/youtube.service';
 })
 export class HomeComponent implements OnInit {
 
+  videos: any[] = [];
+
   constructor(public _yts: YoutubeService) {
     this._yts.getVideo().subscribe( data => {
-      console.log(data);
+      this.videos = data;
+      console.log(this.videos);
     });
   }
 
