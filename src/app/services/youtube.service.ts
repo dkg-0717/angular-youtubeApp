@@ -15,15 +15,20 @@ export class YoutubeService {
 
   constructor(public http: HttpClient ) { }
 
-  getVideo() {
+  getVideo(max?: any) {
 
     const url = `${this.youtubeUrl}/playlistItems`;
     let params = new HttpParams();
+    max = max || 10;
 
     params = params.set('part', 'snippet');
-    params = params.set('maxResults', '10');
+    params = params.set('maxResults', max);
     params = params.set('playlistId', this.playlist);
     params = params.set('key', this.apikey);
+
+    if (this.nextpageToken) {
+      params = params.set('pageToken', this.nextpageToken);
+    }
 
     return this.http.get(url, { params: params })
                     .pipe(map( data => {
